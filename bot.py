@@ -17,6 +17,12 @@ def set_webhook():
     response = requests.post(url, json=payload)
     return response.json()
 
+def delete_webhook():
+    url = f'https://api.telegram.org/bot{BOT_TOKEN}/deleteWebhook'
+    payload = {'url': WEBHOOK_URL}
+    response = requests.post(url, json=payload)
+    return response.json()
+
 @app.route('/webhook', methods=['POST'])
 def webhook():
     print('webhook ok ')
@@ -41,5 +47,7 @@ def index():
     return 'Bot is running!', 200
 
 if __name__ == '__main__':
+    delete_webhook()
+    exit()
     print(set_webhook())
     app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)), debug=True)
